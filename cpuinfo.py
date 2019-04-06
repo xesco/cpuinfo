@@ -22,13 +22,12 @@ def get_cpu_info(file_path):
                 # empty line => next processor
                 pass
     # TOTALS
-    keys  = cpuinfo.keys() # logical CPUs
-    real  = len({cpuinfo[k]['physical_id'] for k in keys}) # real CPUs
-    cores = len({cpuinfo[k]['cpu_cores'] for k in keys})   # cores per CPU
+    real  = len({cpuinfo[k]['physical_id'] for k in cpuinfo.keys()})
+    cores = len({cpuinfo[k]['cpu_cores']   for k in cpuinfo.keys()}) 
     # add entries
-    cpuinfo['total'] = len(keys)
-    cpuinfo['real']  = real
-    cpuinfo['cores'] = cores
+    cpuinfo['real']  = real       # physical CPUs
+    cpuinfo['cores'] = cores      # cores per CPU
+    cpuinfo['total'] = real*cores # logical CPUs
     return cpuinfo
 
 def extract_values(line):
