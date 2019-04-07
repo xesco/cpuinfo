@@ -35,11 +35,11 @@ def get_cpu_info(file_path='/proc/cpuinfo'):
                 sys.exit(1)
     # TOTALS
     real     = len({cpuinfo[k]['physical_id'] for k in cpuinfo.keys()})
-    cores    = cpuinfo['0']['cpu_cores']
+    cores    = int(cpuinfo['0']['cpu_cores'])
     total    = real*cores
 
     # Hyperthreading support (added for completeness)
-    siblings = cpuinfo['0']['siblings']
+    siblings = int(cpuinfo['0']['siblings'])
     if cores != siblings:
         total *= siblings
 
