@@ -39,7 +39,7 @@ SOLUTION
 ========
 - Get cpuinfo from /proc/cpuinfo
 - Parse the file as json.
-- Compute totals: logical/real/cores
+- Compute totals: total/real/cores
 - Start a simple http server on port 8080 and serve the json
 
 REFERENCES

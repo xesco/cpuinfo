@@ -14,6 +14,7 @@ from http.server import (
 )
 
 def get_cpu_info(file_path='/proc/cpuinfo'):
+    """Get System's CPU/s specifications as a dict"""
     cpuinfo = {}
     with open(file_path) as fd:
         for line in fd:
@@ -33,14 +34,23 @@ def get_cpu_info(file_path='/proc/cpuinfo'):
                 sys.stdout.write('Error: /proc/cpuinfo format not supported :(\n')
                 sys.exit(1)
     # TOTALS
-    real  = len({cpuinfo[k]['physical_id'] for k in cpuinfo.keys()})
-    cores = len({cpuinfo[k]['cpu_cores']   for k in cpuinfo.keys()}) 
-    cpuinfo['real']  = real       # physical CPUs
-    cpuinfo['cores'] = cores      # cores per CPU
-    cpuinfo['total'] = real*cores # logical CPUs
+    real     = len({cpuinfo[k]['physical_id'] for k in cpuinfo.keys()})
+    cores    = cpuinfo['0']['cpu_cores']
+    total    = real*cores
+
+    # Hyperthreading support (added for completeness)
+    siblings = cpuinfo['0']['siblings']
+    if cores != siblings:
+        total *= siblings
+
+    cpuinfo['real']  = real  # physical CPUs
+    cpuinfo['cores'] = cores # cores per CPU
+    cpuinfo['total'] = total # logical CPUs
     return cpuinfo
 
 def extract_values(line):
+    """"Normalize lines taken from /proc/cpuinfo"""
+
     key, value = line.split(':')
     key, value = key.strip(), value.strip()
     key = key.replace(' ', '_')
@@ -50,6 +60,7 @@ def extract_values(line):
     return key, value
 
 class HTTPHandler(BaseHTTPRequestHandler):
+    """Simple GET-only HTTP Server"""
 
     cpuinfo_bytes = None
 
@@ -69,6 +80,8 @@ class HTTPHandler(BaseHTTPRequestHandler):
         self.wfile.write(self._get_cpuinfo())
         
 def run(server_class=HTTPServer, handler_class=HTTPHandler, port=8080):
+    """Main loop"""
+
     httpd = server_class(('', port), handler_class)
     print('Server started!')
     httpd.serve_forever()
