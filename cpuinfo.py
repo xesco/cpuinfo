@@ -41,6 +41,7 @@ def get_cpu_info(file_path='/proc/cpuinfo'):
     # Hyperthreading support (added for completeness)
     siblings = int(cpuinfo['0']['siblings'])
     if cores != siblings:
+        cpuinfo['siblings'] = siblings
         total *= siblings
 
     cpuinfo['real']  = real  # physical CPUs
