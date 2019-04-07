@@ -6,7 +6,7 @@ from http.server import (
     BaseHTTPRequestHandler,
 )
 
-def get_cpu_info(file_path):
+def get_cpu_info(file_path='/proc/cpuinfo'):
     cpuinfo = {}
     with open(file_path) as fd:
         for line in fd:
@@ -15,7 +15,7 @@ def get_cpu_info(file_path):
                 if key.lower() == "processor":
                     processor = value
                     cpuinfo[processor] = {} 
-                # note: this breaks if processor is not the first key
+                # note: this breaks if 'processor' is not the first key
                 else:
                     cpuinfo[processor][key] = value
             except ValueError:
@@ -24,7 +24,6 @@ def get_cpu_info(file_path):
     # TOTALS
     real  = len({cpuinfo[k]['physical_id'] for k in cpuinfo.keys()})
     cores = len({cpuinfo[k]['cpu_cores']   for k in cpuinfo.keys()}) 
-    # add entries
     cpuinfo['real']  = real       # physical CPUs
     cpuinfo['cores'] = cores      # cores per CPU
     cpuinfo['total'] = real*cores # logical CPUs
@@ -47,7 +46,7 @@ class HTTPHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self._set_headers()
-        data = json.dumps(get_cpu_info('/proc/cpuinfo'))
+        data = json.dumps(get_cpu_info())
         self.wfile.write(bytes(data, "utf8"))
         
 def run(server_class=HTTPServer, handler_class=HTTPHandler, port=8080):
