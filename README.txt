@@ -9,9 +9,9 @@ Example:
 
 $ docker build -t challenge .
 ...
-$ docker run -d -p 8080:8080 challenge
+$ docker run -t -d -p 8080:8080 challenge
 ...
-$ curl http://localhost:8080/ | jq
+$ curl -s http://localhost:8080/ | jq
 {
   "0": {
     "vendor_id": "IngenuineEntel",
@@ -40,7 +40,7 @@ SOLUTION
 - Get cpuinfo from /proc/cpuinfo
 - Parse the file as json.
 - Compute totals: logical/real/cores
-- Start a simple http server on port 8080 and server the json
+- Start a simple http server on port 8080 and serve the json
 
 REFERENCES
 ==========
