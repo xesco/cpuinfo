@@ -31,7 +31,7 @@ def get_cpu_info(file_path='/proc/cpuinfo'):
                 pass
             except UnboundLocalError:
                 # this should not happen
-                sys.stdout.write('Error: /proc/cpuinfo format not supported :(\n')
+                sys.stderr.write('Error: /proc/cpuinfo format not supported :(\n')
                 sys.exit(1)
     # TOTALS
     real     = len({cpuinfo[k]['physical_id'] for k in cpuinfo.keys()})
@@ -71,8 +71,9 @@ class HTTPHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def _get_cpuinfo(self):
+        # read it one
         if not HTTPHandler.cpuinfo_bytes:
-            data = json.dumps(get_cpu_info('/proc/cpuinfo'))
+            data = json.dumps(get_cpu_info())
             HTTPHandler.cpuinfo_bytes = bytes(data, 'utf8')
         return HTTPHandler.cpuinfo_bytes
 
