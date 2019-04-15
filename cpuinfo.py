@@ -34,6 +34,7 @@ def get_cpu_info(file_path='/proc/cpuinfo'):
                 sys.stderr.write('Error: /proc/cpuinfo format not supported :(\n')
                 sys.exit(1)
     # TOTALS
+    # We assume same CPU architecture for multi CPU systems
     real     = len({cpuinfo[k]['physical_id'] for k in cpuinfo.keys()})
     cores    = int(cpuinfo['0']['cpu_cores'])
     total    = real*cores
@@ -71,7 +72,7 @@ class HTTPHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def _get_cpuinfo(self):
-        # read it one
+        # read it only once
         if not HTTPHandler.cpuinfo_bytes:
             data = json.dumps(get_cpu_info())
             HTTPHandler.cpuinfo_bytes = bytes(data, 'utf8')
