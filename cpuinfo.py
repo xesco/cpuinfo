@@ -61,6 +61,12 @@ def extract_values(line):
         value = value.split()
     return key, value
 
+def to_bytes(_dict, enc='utf-8'):
+    """Convert dict to byte-json"""
+
+    return bytes(json.dumps(_dict), enc)
+
+
 class HTTPHandler(BaseHTTPRequestHandler):
     """Simple GET-only HTTP Server"""
 
@@ -71,17 +77,13 @@ class HTTPHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'application/json')
         self.end_headers()
 
-    @staticmethod
-    def to_bytes(_dict, enc='utf-8'):
-        return bytes(json.dumps(_dict), enc)
-
     def do_GET(self):
-        #try:
+        try:
             self._set_headers(200)
-            self.wfile.write(cpuinfo)
-        #except Exception as ex:
-        #    self._set_headers(500)
-        #    self.wfile.write(self._to_bytes({'error': str(ex)}))
+            self.wfile.write(HTTPHandler.cpuinfo)
+        except Exception as ex:
+            self._set_headers(500)
+            self.wfile.write(to_bytes({'error': str(ex)}))
             
         
 def run(server_class=HTTPServer, handler_class=HTTPHandler, port=8080):
