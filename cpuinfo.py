@@ -64,23 +64,25 @@ def extract_values(line):
 class HTTPHandler(BaseHTTPRequestHandler):
     """Simple GET-only HTTP Server"""
 
-    cpuinfo_bytes = None
+    cpuinfo = to_bytes(get_cpu_info())
 
-    def _set_headers(self):
-        self.send_response(200)
+    def _set_headers(self, code):
+        self.send_response(code)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
 
-    def _get_cpuinfo(self):
-        # read it only once
-        if not HTTPHandler.cpuinfo_bytes:
-            data = json.dumps(get_cpu_info())
-            HTTPHandler.cpuinfo_bytes = bytes(data, 'utf8')
-        return HTTPHandler.cpuinfo_bytes
+    @staticmethod
+    def to_bytes(_dict, enc='utf-8'):
+        return bytes(json.dumps(_dict), enc)
 
     def do_GET(self):
-        self._set_headers()
-        self.wfile.write(self._get_cpuinfo())
+        #try:
+            self._set_headers(200)
+            self.wfile.write(cpuinfo)
+        #except Exception as ex:
+        #    self._set_headers(500)
+        #    self.wfile.write(self._to_bytes({'error': str(ex)}))
+            
         
 def run(server_class=HTTPServer, handler_class=HTTPHandler, port=8080):
     """Main loop"""
