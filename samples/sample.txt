@@ -1,52 +1,52 @@
 processor	: 0
 vendor_id	: GenuineIntel
-cpu family	: 6
+cpu_family	: 6
 model		: 142
-model name	: Intel(R) Core(TM) i5-7Y54 CPU @ 1.20GHz
+model_name	: Intel(R) Core(TM) i5-7Y54 CPU @ 1.20GHz
 stepping	: 9
-cpu MHz		: 1300.000
-cache size	: 4096 KB
-physical id	: 0
+cpu_mhz		: 1300.000
+cache_size	: 4096 KB
+physical_id	: 0
 siblings	: 1
 core id		: 0
-cpu cores	: 1
+cpu_cores	: 1
 apicid		: 0
-initial apicid	: 0
+initial_apicid	: 0
 fpu		: yes
 fpu_exception	: yes
-cpuid level	: 22
+cpuid_level	: 22
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht pbe syscall nx pdpe1gb lm constant_tsc rep_good nopl xtopology nonstop_tsc pni pclmulqdq dtes64 ds_cpl ssse3 sdbg fma cx16 xtpr pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch kaiser fsgsbase bmi1 avx2 bmi2 erms xsaveopt arat
 bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf
 bogomips	: 2592.00
-clflush size	: 64
+clflush_size	: 64
 cache_alignment	: 64
-address sizes	: 39 bits physical, 48 bits virtual
-power management:
+address_sizes	: 39 bits physical, 48 bits virtual
+power_management:
 
 processor	: 1
 vendor_id	: GenuineIntel
-cpu family	: 6
+cpu_family	: 6
 model		: 142
-model name	: Intel(R) Core(TM) i5-7Y54 CPU @ 1.20GHz
+model_name	: Intel(R) Core(TM) i5-7Y54 CPU @ 1.20GHz
 stepping	: 9
-cpu MHz		: 1300.000
-cache size	: 4096 KB
-physical id	: 1
+cpu_mhz		: 1300.000
+cache_size	: 4096 KB
+physical_id	: 1
 siblings	: 1
-core id		: 0
-cpu cores	: 1
+core_id		: 0
+cpu_cores	: 1
 apicid		: 1
-initial apicid	: 1
+initial_apicid	: 1
 fpu		: yes
 fpu_exception	: yes
-cpuid level	: 22
+cpuid_level	: 22
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht pbe syscall nx pdpe1gb lm constant_tsc rep_good nopl xtopology nonstop_tsc pni pclmulqdq dtes64 ds_cpl ssse3 sdbg fma cx16 xtpr pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch kaiser fsgsbase bmi1 avx2 bmi2 erms xsaveopt arat
 bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf
 bogomips	: 2632.71
-clflush size	: 64
+clflush_size	: 64
 cache_alignment	: 64
-address sizes	: 39 bits physical, 48 bits virtual
-power management:
+address_sizes	: 39 bits physical, 48 bits virtual
+power_management:
 
