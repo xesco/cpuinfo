@@ -36,19 +36,17 @@ class HTTPHandler(BaseHTTPRequestHandler):
             self._set_headers(500)
             self.wfile.write(to_bytes({'error': str(ex)}))
             
-
-def run(port, server_class=HTTPServer, handler_class=HTTPHandler):
-    """Main loop"""
-
-    httpd = server_class(('', port), handler_class)
-    print(f'Server started at port {port}')
-    httpd.serve_forever()
-
-if __name__ == '__main__':
+def run():
     try:
         port = int(sys.argv[1])
     except:
         port = HTTPHandler.default_port
-    run(port)
+
+    httpd = HTTPServer(('', port), HTTPHandler)
+    print(f'Server started at port {port}')
+    httpd.serve_forever()
+
+if __name__ == '__main__':
+    run()
 
 # END
