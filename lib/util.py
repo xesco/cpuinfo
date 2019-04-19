@@ -1,6 +1,16 @@
 import json
 
+def to_bytes(_dict, enc='utf-8'):
+    """Convert dict to byte-json"""
+    return bytes(json.dumps(_dict), enc)
+
 def get_totals(cpuinfo):
+    """Compute totals:
+       - real: physical CPUs
+       - cores: cores x physical CPU
+       - total: logical CPUs: real*cores*siblings
+    Note: Siblings are only counted if Hyperthreading is enabled
+    """
     # We assume same CPU architecture for multi CPU systems
     real     = len({cpuinfo[k]['physical_id'] for k in cpuinfo.keys()})
     cores    = int(cpuinfo['0']['cpu_cores'])
@@ -34,7 +44,7 @@ def get_cpu_info(file_path='/proc/cpuinfo'):
                 sys.stderr.write('Error: /proc/cpuinfo format not supported :(\n')
                 sys.exit(1)
     cpuinfo['real'], cpuinfo['cores'], cpuinfo['total'] = get_totals(cpuinfo)
-    return cpuinfo
+    return to_bytes(cpuinfo)
 
 def get_cpu_info_alt(file_path='/proc/cpuinfo'):
     """Get System's CPU/s specifications as a dict"""
@@ -54,11 +64,10 @@ def get_cpu_info_alt(file_path='/proc/cpuinfo'):
     # extra space at the end of input => we need to delete empty processor
     del cpuinfo[procnum]
     cpuinfo['real'], cpuinfo['cores'], cpuinfo['total'] = get_totals(cpuinfo)
-    return cpuinfo
+    return to_bytes(cpuinfo)
 
 def extract_values(line):
     """"Normalize lines taken from /proc/cpuinfo"""
-
     key, value = line.split(':')
     key, value = key.strip(), value.strip()
     key = key.replace(' ', '_')
@@ -67,7 +76,3 @@ def extract_values(line):
         value = value.split()
     return key.lower(), value
 
-def to_bytes(_dict, enc='utf-8'):
-    """Convert dict to byte-json"""
-
-    return bytes(json.dumps(_dict), enc)

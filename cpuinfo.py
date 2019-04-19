@@ -12,15 +12,12 @@ from http.server import (
     BaseHTTPRequestHandler,
 )
 
-from lib.util import (
-    to_bytes,
-    get_cpu_info_alt,
-)
+from lib.util import get_cpu_info_alt
 
 class HTTPHandler(BaseHTTPRequestHandler):
     """Simple GET-only HTTP Server"""
 
-    cpuinfo = to_bytes(get_cpu_info_alt())
+    cpuinfo = get_cpu_info_alt()
     default_port = 8080
 
     def _set_headers(self, code):
