@@ -7,7 +7,7 @@ from http.server import (
     BaseHTTPRequestHandler,
 )
 
-from lib.util import get_cpu_info_alt
+from lib.util import get_cpu_info
 
 DEFAULT_PORT = 8080
 
