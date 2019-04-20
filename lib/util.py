@@ -75,4 +75,3 @@ def extract_values(line):
     if key.lower() in ('flags', 'bugs'):
         value = value.split()
     return key.lower(), value
-
