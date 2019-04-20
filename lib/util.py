@@ -8,7 +8,7 @@ def get_totals(cpuinfo):
     """Compute totals:
        - real: physical CPUs
        - cores: cores x physical CPU
-       - total: logical CPUs: real*cores*siblings
+       - total: logical CPUs real*cores*siblings
     Note: Siblings are only counted if Hyperthreading is enabled
     """
     # We assume same CPU architecture for multi CPU systems
@@ -43,26 +43,6 @@ def get_cpu_info(file_path='/proc/cpuinfo'):
                 # this should not happen
                 sys.stderr.write('Error: /proc/cpuinfo format not supported :(\n')
                 sys.exit(1)
-    cpuinfo['real'], cpuinfo['cores'], cpuinfo['total'] = get_totals(cpuinfo)
-    return to_bytes(cpuinfo)
-
-def get_cpu_info_alt(file_path='/proc/cpuinfo'):
-    """Get System's CPU/s specifications as a dict"""
-    cpuinfo = {}
-    procnum = str(0)
-    cpuinfo[procnum] = {}
-    with open(file_path) as fd:
-        for line in fd:
-            try:
-                key, value = extract_values(line)
-                if key != 'processor':
-                    cpuinfo[procnum][key] = value
-            except ValueError:
-                # empty line => next processor
-                procnum = str(int(procnum)+1)
-                cpuinfo[procnum] = {}
-    # extra space at the end of input => we need to delete empty processor
-    del cpuinfo[procnum]
     cpuinfo['real'], cpuinfo['cores'], cpuinfo['total'] = get_totals(cpuinfo)
     return to_bytes(cpuinfo)
 

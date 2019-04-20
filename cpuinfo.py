@@ -42,7 +42,7 @@ def run():
     except (IndexError, ValueError):
         port = DEFAULT_PORT
     try:
-        data = get_cpu_info_alt()    
+        data = get_cpu_info()    
     except FileNotFoundError:
         print("Error: /proc/cpuinfo not found :(")
         sys.exit(1)
