@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 
-##########################################
-# Code Challenge - New Relic - Barcelona #
-# Francesc Vendrell | Apr 2019           #
-##########################################
-
 import sys
 
 from http.server import (
