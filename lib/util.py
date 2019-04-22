@@ -1,4 +1,5 @@
 import json
+import sys
 
 def to_bytes(_dict, enc='utf-8'):
     """Convert dict to byte-json"""
