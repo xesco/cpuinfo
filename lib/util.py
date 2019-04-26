@@ -37,12 +37,9 @@ def get_cpu_info(file_path='/proc/cpuinfo'):
                    # note: this breaks if 'processor' is not the first key
                     cpuinfo[processor][key] = value
             except ValueError:
-                # empty line => next processor
+                # next processor
                 pass
-            except UnboundLocalError:
-                # this should not happen
-                sys.stderr.write('Error: /proc/cpuinfo format not supported :(\n')
-                sys.exit(1)
+
     cpuinfo['real'], cpuinfo['cores'], cpuinfo['total'] = get_totals(cpuinfo)
     return to_bytes(cpuinfo)
 
@@ -51,7 +48,10 @@ def extract_values(line):
     key, value = line.split(':')
     key, value = key.strip(), value.strip()
     key = key.replace(' ', '_')
+
     # values as lists
     if key.lower() in ('flags', 'bugs'):
         value = value.split()
     return key.lower(), value
+
+# END

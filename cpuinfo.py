@@ -7,7 +7,7 @@ from http.server import (
     BaseHTTPRequestHandler,
 )
 
-from lib.util import get_cpu_info
+from lib.util import get_cpu_info, to_bytes
 
 DEFAULT_PORT = 8080
 
@@ -41,15 +41,18 @@ def run():
         port = int(sys.argv[1])
     except (IndexError, ValueError):
         port = DEFAULT_PORT
+
     try:
         data = get_cpu_info()    
     except FileNotFoundError:
         print("Error: /proc/cpuinfo not found :(")
-        sys.exit(1)
-
-    httpd = MyHTTPServer(('', port), HTTPHandler, data)
-    print(f'Server started at port {port}')
-    httpd.serve_forever()
+    except UnboundLocalError:
+        sys.stderr.write('Error: /proc/cpuinfo format not supported :(\n')
+    # All good
+    else:
+        httpd = MyHTTPServer(('', port), HTTPHandler, data)
+        print(f'Server started at port {port}')
+        httpd.serve_forever()
 
 if __name__ == '__main__':
     run()
