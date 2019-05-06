@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 
-# TODO:
-# Add port validation
-
 import sys
 
 from http.server import (
