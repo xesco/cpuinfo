@@ -5,11 +5,11 @@ LOCAL_PORT:=8080
 .PHONY: all
 all:
 	@echo "Build the container:"
-	@echo "\$$ make build"
+	@echo "    \$$ make build"
 	@echo "Run the container:"
-	@echo "\$$ make run"
+	@echo "    \$$ make run"
 	@echo "Test the service:"
-	@echo "\$$ make test"
+	@echo "    \$$ make test"
 
 .PHONY: build
 build:
