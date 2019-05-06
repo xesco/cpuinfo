@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# TODO:
+# Add port validation
+
 import sys
 
 from http.server import (
@@ -7,7 +10,7 @@ from http.server import (
     BaseHTTPRequestHandler,
 )
 
-from lib.util import get_cpu_info, to_bytes
+from lib.util import get_cpu_info, to_bytes, validate_port
 
 DEFAULT_PORT = 8080
 
@@ -37,17 +40,22 @@ class HTTPHandler(BaseHTTPRequestHandler):
             self.wfile.write(to_bytes({'error': str(ex)}))
             
 def run():
+
+    port = DEFAULT_PORT
     try:
-        port = int(sys.argv[1])
-    except (IndexError, ValueError):
-        port = DEFAULT_PORT
+        if len(sys.argv) >= 2:
+            port = validate_port(sys.argv[1])
+    except ValueError:
+        print(f"WARNING invalid port: {sys.argv[1]} (using default)")
 
     try:
         data = get_cpu_info()    
     except FileNotFoundError:
         print("Error: /proc/cpuinfo not found :(")
     except UnboundLocalError:
-        sys.stderr.write('Error: /proc/cpuinfo format not supported :(\n')
+        print('Error: /proc/cpuinfo format not supported :(\n')
+    except Exception:
+        print('Unknown error :(')
     # All good
     else:
         httpd = MyHTTPServer(('', port), HTTPHandler, data)

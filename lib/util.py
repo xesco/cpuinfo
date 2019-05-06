@@ -54,4 +54,12 @@ def extract_values(line):
         value = value.split()
     return key.lower(), value
 
+def validate_port(port):
+    """Check port is an int an in range: might throw Value expection"""
+
+    port = int(port)
+    if not (port >= 1024 and port <= 65535):
+        raise ValueError
+    return port
+
 # END

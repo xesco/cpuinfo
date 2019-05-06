@@ -1,6 +1,6 @@
-IMAGE_NAME=cpuinfo
-CONTAINER_NAME=cpuinfo
-LOCAL_PORT=8080
+IMAGE_NAME:=cpuinfo
+CONTAINER_NAME:=cpuinfo
+LOCAL_PORT:=8080
 
 .PHONY: help
 help:
