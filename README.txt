@@ -42,6 +42,11 @@ SOLUTION
 - Compute totals: total/real/cores
 - Start a simple http server on port 8080 and serve the json
 
+HOWTO
+=====
+$ make build
+$ make run
+
 REFERENCES
 ==========
 http://doc.callmematthi.eu/static/webArticles/Understanding%20Linux%20_proc_cpuinfo.pdf
